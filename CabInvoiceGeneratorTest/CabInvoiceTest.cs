@@ -1,22 +1,56 @@
-﻿// <copyright file="CabInvoiceTest.cs" company="PlaceholderCompany">
+﻿// <copyright file="CabInvoiceTest.cs" company="BridgeLabz Solution">
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace Tests
+namespace CabInvoiceGeneratorTest
 {
+    using CabInvoiceGenerator;
     using NUnit.Framework;
 
-    public class Tests
+    /// <summary>
+    /// Class for testing cab Invoice.
+    /// </summary>
+    public class CabInvoiceTest
     {
+        private CabInvoice cabInvoice;
+
+        /// <summary>
+        /// Here we put common code that will be used in all method.
+        /// </summary>
         [SetUp]
         public void Setup()
         {
+            this.cabInvoice = new CabInvoice();
         }
 
+        /// <summary>
+        /// Testing Calculate Fair.
+        /// </summary>
         [Test]
-        public void Test1()
+        public void GivenDistanceAndTime_WhenProper_ShouldGenerateTotalFair()
         {
-            Assert.Pass();
+            double fair = this.cabInvoice.CalculateFair(2.0, 5);
+            Assert.AreEqual(25, fair);
+        }
+
+        /// <summary>
+        /// Testing Calculate Fair.
+        /// </summary>
+        [Test]
+        public void GivenDistanceAndTime_ShouldGenerateTotalFair()
+        {
+            double fair = this.cabInvoice.CalculateFair(2.0, 5);
+            Assert.AreEqual(25, fair);
+        }
+
+        /// <summary>
+        /// Testing Calculate Fair.
+        /// </summary>
+        [Test]
+        public void GivenDistanceAndTime_WhenLessThenMinimumFair_ShouldGenerateTotalFair()
+        {
+            double fair = this.cabInvoice.CalculateFair(0.0, 1);
+            Assert.AreEqual(5, fair);
         }
     }
 }
