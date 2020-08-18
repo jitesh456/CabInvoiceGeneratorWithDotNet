@@ -50,8 +50,9 @@ namespace CabInvoiceGeneratorTest
         public void GivenMultipleRide_ShouldReturnTotalFair()
         {
             Ride[] rides = { new Ride(2.0, 5), new Ride(0.0, 1) };
-            double fair = this.cabInvoice.CalculateFair(rides);
-            Assert.AreEqual(30, fair);
+            InvoiceSummary actualInvoiceSummary = this.cabInvoice.CalculateFair(rides);
+            InvoiceSummary expectedInvoiceSummary = new InvoiceSummary(2, 30);
+            Assert.AreEqual(actualInvoiceSummary, expectedInvoiceSummary);
         }
     }
 }

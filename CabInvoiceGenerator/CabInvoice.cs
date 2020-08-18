@@ -32,7 +32,7 @@ namespace CabInvoiceGenerator
         /// </summary>
         /// <param name="rides">contain information of multiple ride.</param>
         /// <returns> total fair.</returns>
-        public double CalculateFair(Ride[] rides)
+        public InvoiceSummary CalculateFair(Ride[] rides)
         {
             double totalFair = 0;
             foreach (Ride ride in rides)
@@ -40,7 +40,7 @@ namespace CabInvoiceGenerator
                 totalFair += this.CalculateFair(ride.Distance, ride.Time);
             }
 
-            return totalFair;
+            return new InvoiceSummary(rides.Length, totalFair);
         }
     }
 }
