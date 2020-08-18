@@ -5,15 +5,18 @@
 namespace CabInvoiceGenerator
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// Here we have code for generating Invoice.
     /// </summary>
-    public class CabInvoice
+    public class InvoiceService
     {
         private readonly int costPerKiloMeter = 10;
         private readonly int costPerMinute = 1;
         private readonly int minimumCost = 5;
+        private RideRepository rideRepository = new RideRepository();
 
         /// <summary>
         /// This function calculate cost.
@@ -32,7 +35,7 @@ namespace CabInvoiceGenerator
         /// </summary>
         /// <param name="rides">contain information of multiple ride.</param>
         /// <returns> total fair.</returns>
-        public InvoiceSummary CalculateFair(Ride[] rides)
+        public InvoiceSummary CalculateFair(List<Ride> rides)
         {
             double totalFair = 0;
             foreach (Ride ride in rides)
@@ -40,7 +43,27 @@ namespace CabInvoiceGenerator
                 totalFair += this.CalculateFair(ride.Distance, ride.Time);
             }
 
-            return new InvoiceSummary(rides.Length, totalFair);
+            return new InvoiceSummary(rides.Count, totalFair);
+        }
+
+        /// <summary>
+        /// This function is used for AddingRide.
+        /// </summary>
+        /// <param name="userId"> user id.</param>
+        /// <param name="rides"> contain rides info.</param>
+        public void AddRide(string userId, List<Ride> rides)
+        {
+            this.rideRepository.Rides.Add(userId, rides.ToList());
+        }
+
+        /// <summary>
+        /// This function is used for getting List.
+        /// </summary>
+        /// <param name="userId">contain userId.</param>
+        /// <returns> return List.</returns>
+        public InvoiceSummary GetInvoiceSummary(string userId)
+        {
+            return this.CalculateFair(this.rideRepository.Rides[userId]);
         }
     }
 }

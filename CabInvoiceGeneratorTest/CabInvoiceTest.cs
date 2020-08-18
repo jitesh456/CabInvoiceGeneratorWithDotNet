@@ -4,6 +4,7 @@
 
 namespace CabInvoiceGeneratorTest
 {
+    using System.Collections.Generic;
     using CabInvoiceGenerator;
     using NUnit.Framework;
 
@@ -12,7 +13,7 @@ namespace CabInvoiceGeneratorTest
     /// </summary>
     public class CabInvoiceTest
     {
-        private CabInvoice cabInvoice;
+        private InvoiceService invoiceService;
 
         /// <summary>
         /// Here we put common code that will be used in all method.
@@ -20,7 +21,7 @@ namespace CabInvoiceGeneratorTest
         [SetUp]
         public void Setup()
         {
-            this.cabInvoice = new CabInvoice();
+            this.invoiceService = new InvoiceService();
         }
 
         /// <summary>
@@ -29,7 +30,7 @@ namespace CabInvoiceGeneratorTest
         [Test]
         public void GivenDistanceAndTime_WhenProper_ShouldGenerateTotalFair()
         {
-            double fair = this.cabInvoice.CalculateFair(2.0, 5);
+            double fair = this.invoiceService.CalculateFair(2.0, 5);
             Assert.AreEqual(25, fair);
         }
 
@@ -39,7 +40,7 @@ namespace CabInvoiceGeneratorTest
         [Test]
         public void GivenDistanceAndTime_WhenLessThenMinimumFair_ShouldGenerateTotalFair()
         {
-            double fair = this.cabInvoice.CalculateFair(0.0, 1);
+            double fair = this.invoiceService.CalculateFair(0.0, 1);
             Assert.AreEqual(5, fair);
         }
 
@@ -49,8 +50,26 @@ namespace CabInvoiceGeneratorTest
         [Test]
         public void GivenMultipleRide_ShouldReturnTotalFair()
         {
-            Ride[] rides = { new Ride(2.0, 5), new Ride(0.0, 1) };
-            InvoiceSummary actualInvoiceSummary = this.cabInvoice.CalculateFair(rides);
+            List<Ride> rides = new List<Ride>();
+            rides.Add(new Ride(2.0, 5));
+            rides.Add(new Ride(0.0, 1));
+            InvoiceSummary actualInvoiceSummary = this.invoiceService.CalculateFair(rides);
+            InvoiceSummary expectedInvoiceSummary = new InvoiceSummary(2, 30);
+            Assert.AreEqual(actualInvoiceSummary, expectedInvoiceSummary);
+        }
+
+        /// <summary>
+        /// Testing  for total fair for multiple ride Fair.
+        /// </summary>
+        [Test]
+        public void GivenUserIdAndRide_ShouldReturnInvoiceSummary()
+        {
+            string userId = "S41";
+            List<Ride> rides = new List<Ride>();
+            rides.Add(new Ride(2.0, 5));
+            rides.Add(new Ride(0.0, 1));
+            this.invoiceService.AddRide(userId, rides);
+            InvoiceSummary actualInvoiceSummary = this.invoiceService.GetInvoiceSummary(userId);
             InvoiceSummary expectedInvoiceSummary = new InvoiceSummary(2, 30);
             Assert.AreEqual(actualInvoiceSummary, expectedInvoiceSummary);
         }
