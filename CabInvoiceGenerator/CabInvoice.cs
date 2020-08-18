@@ -26,5 +26,21 @@ namespace CabInvoiceGenerator
             double fair = (distance * this.costPerKiloMeter) + (time * this.costPerMinute);
             return (fair < this.minimumCost) ? this.minimumCost : fair;
         }
+
+        /// <summary>
+        /// This function calculate fair of multiple ride.
+        /// </summary>
+        /// <param name="rides">contain information of multiple ride.</param>
+        /// <returns> total fair.</returns>
+        public double CalculateFair(Ride[] rides)
+        {
+            double totalFair = 0;
+            foreach (Ride ride in rides)
+            {
+                totalFair += this.CalculateFair(ride.Distance, ride.Time);
+            }
+
+            return totalFair;
+        }
     }
 }

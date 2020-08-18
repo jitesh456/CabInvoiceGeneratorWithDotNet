@@ -34,23 +34,24 @@ namespace CabInvoiceGeneratorTest
         }
 
         /// <summary>
-        /// Testing Calculate Fair.
-        /// </summary>
-        [Test]
-        public void GivenDistanceAndTime_ShouldGenerateTotalFair()
-        {
-            double fair = this.cabInvoice.CalculateFair(2.0, 5);
-            Assert.AreEqual(25, fair);
-        }
-
-        /// <summary>
-        /// Testing Calculate Fair.
+        /// Testing  for Minimum  Fair.
         /// </summary>
         [Test]
         public void GivenDistanceAndTime_WhenLessThenMinimumFair_ShouldGenerateTotalFair()
         {
             double fair = this.cabInvoice.CalculateFair(0.0, 1);
             Assert.AreEqual(5, fair);
+        }
+
+        /// <summary>
+        /// Testing  for total fair for multiple ride Fair.
+        /// </summary>
+        [Test]
+        public void GivenMultipleRide_ShouldReturnTotalFair()
+        {
+            Ride[] rides = { new Ride(2.0, 5), new Ride(0.0, 1) };
+            double fair = this.cabInvoice.CalculateFair(rides);
+            Assert.AreEqual(30, fair);
         }
     }
 }
