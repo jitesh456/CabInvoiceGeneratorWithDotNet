@@ -1,4 +1,4 @@
-﻿// <copyright file="InvoiceSummary.cs" company="PlaceholderCompany">
+﻿// <copyright file="InvoiceSummary.cs" company="BridgeLabzSolution">
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 namespace CabInvoiceGenerator
@@ -29,6 +29,11 @@ namespace CabInvoiceGenerator
         }
 
         /// <summary>
+        /// Gets TotalFair return totalFair.
+        /// </summary>
+        public double TotalFair => this.totalFair;
+
+        /// <summary>
         /// checking for equal method.
         /// </summary>
         /// <param name="obj"> contaon invoice Information.</param>
@@ -40,6 +45,15 @@ namespace CabInvoiceGenerator
                    this.noOfRide == summary.noOfRide &&
                    this.totalFair == summary.totalFair &&
                    this.averageFair == summary.averageFair;
+        }
+
+        /// <summary>
+        /// For getting HashCode.
+        /// </summary>
+        /// <returns> return hashcode.</returns>
+        public override int GetHashCode()
+        {
+            return 0;
         }
     }
 }

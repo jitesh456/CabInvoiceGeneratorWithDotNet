@@ -1,4 +1,4 @@
-﻿// <copyright file="RideRepository.cs" company="PlaceholderCompany">
+﻿// <copyright file="RideRepository.cs" company="BridgeLabz Solution">
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
@@ -9,7 +9,7 @@ namespace CabInvoiceGenerator
     using System.Text;
 
     /// <summary>
-    /// For Storing List of ride;
+    /// For Storing List of ride.
     /// </summary>
     public class RideRepository
     {
