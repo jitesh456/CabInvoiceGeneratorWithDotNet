@@ -35,6 +35,10 @@ namespace CabInvoiceGenerator
             /// this is used for invalid user Id.
             /// </summary>
             PROVIDE_VALID_USER_NAME,
+
+            /// <summary>
+            /// This for empty user id.
+            /// </summary>
             PLEASE_PROVIDE_USERID,
         }
 

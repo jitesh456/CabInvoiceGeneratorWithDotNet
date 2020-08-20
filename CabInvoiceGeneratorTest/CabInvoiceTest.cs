@@ -142,5 +142,44 @@ namespace CabInvoiceGeneratorTest
             this.invoiceService.AddRide(userId, rides));
             Assert.AreEqual(CabServiceException.ExceptionType.PLEASE_PROVIDE_USERID, ex.GivenExceptionType);
         }
+
+        /// <summary>
+        /// Test for adding ride with existing user id.
+        /// </summary>
+        [Test]
+        public void GivenUserId_WhenUserIdExist_ShouldAddRideInExistingRideList()
+        {
+            string userId = "S123";
+            List<Ride> rides = new List<Ride>()
+            {
+            new Ride(2.0, 5, RideType.Normal), new Ride(0.0, 1, RideType.Normal),
+            };
+
+            List<Ride> rides1 = new List<Ride>()
+            {
+            new Ride(3.0, 10, RideType.Normal), new Ride(5.0, 1, RideType.Primium),
+            };
+            this.invoiceService.AddRide(userId, rides);
+            this.invoiceService.AddRide(userId, rides1);
+
+            Assert.AreEqual(4, this.invoiceService.GetInvoiceSummary(userId).NoOfRide);
+        }
+
+        /// <summary>
+        /// Test for adding ride with existing user id.
+        /// </summary>
+        [Test]
+        public void GivenUserId_WhenRideTypeNull_ShouldAddRideInExistingRideList()
+        {
+            string userId = null;
+            List<Ride> rides = new List<Ride>()
+            {
+            new Ride(2.0, 5, RideType.Normal), new Ride(0.0, 1, null),
+            };
+
+            var ex = Assert.Throws<CabServiceException>(() => this.invoiceService.AddRide(userId, rides));
+
+            Assert.AreEqual(CabServiceException.ExceptionType.PLEASE_PROVIDE_USERID, ex.GivenExceptionType);
+        }
     }
 }
