@@ -58,7 +58,7 @@ namespace CabInvoiceGenerator
             try
             {
                 this.ValidateUserId(userId);
-                this.rideRepository.Rides.Add(userId, rides.ToList());
+                this.rideRepository.AddRide(userId, rides.ToList());
             }
             catch (ArgumentNullException)
             {

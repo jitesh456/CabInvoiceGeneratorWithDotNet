@@ -34,14 +34,18 @@ namespace CabInvoiceGenerator
         public double TotalFair => this.totalFair;
 
         /// <summary>
+        /// Gets NoOfRide return total no of ride.
+        /// </summary>
+        public int NoOfRide => this.noOfRide;
+
+        /// <summary>
         /// checking for equal method.
         /// </summary>
         /// <param name="obj"> contaon invoice Information.</param>
         /// <returns> return true/false.</returns>
         public override bool Equals(object obj)
         {
-            var summary = obj as InvoiceSummary;
-            return summary != null &&
+            return obj is InvoiceSummary summary &&
                    this.noOfRide == summary.noOfRide &&
                    this.totalFair == summary.totalFair &&
                    this.averageFair == summary.averageFair;
